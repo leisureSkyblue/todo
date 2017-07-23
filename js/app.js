@@ -7,6 +7,9 @@ angular.module('myApp', [])
 
         $scope.taskList = angular.fromJson(localStorage.getItem("taskList")) || [];
        
+        $scope.$watch('taskList',function(){
+            localStorage.setItem("taskList", angular.toJson($scope.taskList));
+        },true)
 
         $scope.addTask = function() {
             if ($scope.task) {
@@ -17,7 +20,6 @@ angular.module('myApp', [])
                     isCompleted: false,
                     isEdit: false
                 });
-                localStorage.setItem("taskList", angular.toJson($scope.taskList));
                 $scope.task = '';
             } else {
                 alert("请输入任务名称");
@@ -33,7 +35,6 @@ angular.module('myApp', [])
             for (var i = 0; i < $scope.taskList.length; i++) {
                 if ($scope.taskList[i].id === id) {
                     $scope.taskList.splice(i, 1);
-                    localStorage.setItem("taskList", JSON.stringify($scope.taskList));
                 }
             }
         }
@@ -77,7 +78,6 @@ angular.module('myApp', [])
                 if ($scope.taskList[i].isCompleted) {
                     $scope.taskList.splice(i, 1);
                     i--;
-                    localStorage.setItem("taskList", JSON.stringify($scope.taskList));
                 }
             }
         }
