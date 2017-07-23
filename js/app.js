@@ -2,7 +2,11 @@ angular.module('myApp', [])
     .controller('demoCtrl', ['$scope', function($scope) {
         
         // 如果localStorage没有数据,默认为空数组
-        $scope.taskList = JSON.parse(localStorage.getItem("taskList")) || [];
+
+        console.log(JSON.parse(localStorage.getItem("taskList")))
+
+        $scope.taskList = angular.fromJson(localStorage.getItem("taskList")) || [];
+       
 
         $scope.addTask = function() {
             if ($scope.task) {
@@ -13,7 +17,7 @@ angular.module('myApp', [])
                     isCompleted: false,
                     isEdit: false
                 });
-                localStorage.setItem("taskList", JSON.stringify($scope.taskList));
+                localStorage.setItem("taskList", angular.toJson($scope.taskList));
                 $scope.task = '';
             } else {
                 alert("请输入任务名称");
